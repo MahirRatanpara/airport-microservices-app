@@ -24,10 +24,9 @@ public class AirportController {
 	}
 	
 	private void loadAirport() {
-		List<Airport> listAirports = null;
 		try {
 			List<String> linesOfCSV = Files.readAllLines(Path.of("d:\\workspaces\\database\\airports.csv"));
-	        listAirports = linesOfCSV.stream().skip(1).map(eachLine -> {
+			airports = linesOfCSV.stream().skip(1).map(eachLine -> {
 	            Airport airport = new Airport();
 	            String[] splitColumns = eachLine.split(",");
 	            airport.setAirportName(splitColumns[3].replaceAll("\"", ""));
@@ -38,7 +37,6 @@ public class AirportController {
 		} catch (IOException ex) {
 		    ex.printStackTrace();
 		}
-		airports=listAirports;
 	}
 
 	@GetMapping(path = "all")
