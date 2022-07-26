@@ -1,0 +1,28 @@
+<label for="search">Search String: </label>
+<input type="text" id="search"> 
+<button onClick="handleSearch()">Search!</button>
+
+<ul id="list">
+</ul>
+
+<script>
+	var handleSearch = () =>{
+		console.log("Handling Search!");
+		let searchString = document.getElementById("search").value;
+		console.log(searchString);
+		let http = new XMLHttpRequest();
+		http.open('GET', '/airports/search/' + searchString, true);
+		http.onreadystatechange = () => {
+			console.log(http.responseText);
+			if(http.readyState == 4){
+				let el = "";
+				let listOfAirports= JSON.parse(http.responseText);
+				listOfAirports.forEach(e=>{
+					el = el + "<li>" + e.airportName + "<ul>" + "<li>" + e.airportType + "</li>" + "<li>" + e.country + "</li>" + "</ul>" + "</li>"
+				});
+				document.getElementById("list").innerHTML = el;
+			}
+		};
+		http.send(); 
+	}
+</script>
